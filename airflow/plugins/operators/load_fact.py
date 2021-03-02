@@ -25,6 +25,7 @@ class LoadFactOperator(BaseOperator):
                 redshift_conn_id = '',
                 sql_create = '',
                 sql_select = '',
+                not_append = True,
                 *args, **kwargs):
 
         super(LoadFactOperator, self).__init__(*args, **kwargs)
@@ -32,11 +33,13 @@ class LoadFactOperator(BaseOperator):
         self.redshift_conn_id = redshift_conn_id
         self.sql_create = sql_create
         self.sql_select = sql_select
+        self.not_append = not_append
 
     def execute(self, context):
         self.log.info(f'Building Fact Table:{self.table}')
         redshift = PostgresHook(postgres_conn_id=self.redshift_conn_id)
-        redshift.run("DROP TABLE IF EXISTS {}".format(self.table))
         redshift.run(self.sql_create)
+        if self.not_append:
+            redshift.run("DELETE FROM {}".format(self.table))
         sql_stage_format = LoadFactOperator.sql_insert.format(self.table, self.sql_select)
         redshift.run(sql_stage_format)
