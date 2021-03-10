@@ -26,7 +26,7 @@ Since we need to extract large amounts of data for later transformations, as fir
 ![staging_tables](diagram02.png)
 
 
-##### Tranformation and Loading
+##### Transformation and Loading
 Given that the *logs dataset* only have metadata about user's activity we must extract the information about songs from the *songs dataset*. To do so, the data from the staging tables was transformed and loaded into the data warehouse tables. It should be noted that this data warehouse is stored in a AWS Redshift cluster that allows fast queries of the data. 
 
 ![etl](diagram01.png)
@@ -74,13 +74,13 @@ The ETL pipeline was orchestrated with Airflow with the following tasks
 
 - `airflow/dags/sparkify_dag.py`: Specifies the DAG of the data pipeline
 
-- `airflow/plugins/operators/stage_redshift.py`: Define operator to load data from S3 to staging table in AWS Redshift
+- `airflow/plugins/operators/stage_redshift.py`: Defines an operator to load data from S3 to staging table in AWS Redshift
 
-- `airflow/plugins/operators/load_dimension.py`: Define operator to load data to dimensional table
+- `airflow/plugins/operators/load_dimension.py`: Defines an operator to load data to dimensional table
 
-- `airflow/plugins/operators/load_fact.py`: Define operator to load data to fact table
+- `airflow/plugins/operators/load_fact.py`: Defines an operator to load data to fact table
 
-- `airflow/plugins/operators/data_quality.py`: Define operator to check data quality
+- `airflow/plugins/operators/data_quality.py`: Defines an operator to check data quality
 
 - `airflow/plugins/helpers/sql_queries.py`: File with the sql queries
 
@@ -90,7 +90,7 @@ The ETL pipeline was orchestrated with Airflow with the following tasks
 
 ---
 
-On the the terminal on working directory do the following:
+On the terminal on working directory do the following:
 
 1. Run `export AIRFLOW_HOME=/PATH/TO/WORKING_DIRECTORY/airflow`
 
